@@ -46,7 +46,7 @@ public:
 		New->pNext = Head;
 		//3. Переносим голову на новый элемент
 		Head = New;
-		size++
+		size++;
 	}
 	void push_back(int Data)
 	{
@@ -57,7 +57,7 @@ public:
 		Element* Temp = Head;
 		while (Temp->pNext)Temp = Temp->pNext;
 		Temp->pNext = new Element(Data);
-		size++
+		size++;
 	}
 	void insert(int Data, int Index)
 	{
@@ -76,7 +76,7 @@ public:
 		New->pNext = Temp->pNext;
 		//3. Включаем элемент в список
 		Temp->pNext = New;
-		size++
+		size++;
 	}
 	//		Erasing element:
 	void pop_front()
@@ -87,7 +87,7 @@ public:
 		Head = Head->pNext;
 		//3. Удаляем первый элемент
 		delete Erased;
-		size--
+		size--;
 	}
 	void pop_back()
 	{
@@ -99,7 +99,7 @@ public:
 		delete Temp->pNext;
 		//3. Заменяем адрес удаленного элемента нулем (nullptr)
 		Temp->pNext = nullptr;
-		size--
+		size--;
 	}
 
 	//		Methods
