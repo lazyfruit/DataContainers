@@ -261,6 +261,9 @@ void main()
 {
 	setlocale(LC_ALL, "");
 #ifdef BASE_CHECK
+	/*ForwardList list;
+	list.~ForwardList();*/
+
 	int n;	//Размер списка
 	cout << "Введите размер списка: "; cin >> n;
 	ForwardList list;
@@ -310,7 +313,6 @@ void main()
 	list1.push_back(21);
 	list1 = list1;
 	list1.print();
-
 
 	//ForwardList list2 = list1;	//CopyConstructor
 	ForwardList list2;
