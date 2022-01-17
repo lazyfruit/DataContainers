@@ -6,6 +6,7 @@ using std::endl;
 
 #define tab "\t"
 #define line "\n____________________________________________________________________________________\n"
+//#define DEBUG
 
 class Element
 {
@@ -39,7 +40,7 @@ int Element::count = 0;	//Статические переменные могут
 
 //Element* operator++(Element*& Temp)
 //{
-//	return Temp = Temp->get_pNext();
+//return Temp = Temp->get_pNext();
 //}
 
 class Iterator
@@ -97,7 +98,7 @@ class ForwardList
 					Является точкой входа в список.
 	size_t size;
 public:
-	Element* getHead()const
+	Element* get_Head()const
 	{
 		return Head;
 	}
@@ -219,6 +220,21 @@ public:
 		//Теперь Temp является последним элементом списка.
 		size--;
 	}
+	void erase(int Index)
+	{
+		if (Index > Head->count)
+		{
+			cout << "Error: Выход за пределы списка!";
+			return;
+		}
+		if (Index == 0 || Head == nullptr)return pop_front();
+		Element* Temp = Head;
+		for (int i = 0; i < Index - 1; i++)Temp = Temp->pNext;
+		Element* Erased = Temp->pNext;
+		Temp->pNext = Temp->pNext->pNext;
+		delete Erased;
+		size--;
+	}
 	//	Methods
 	void print()const
 	{
@@ -242,9 +258,9 @@ public:
 ForwardList operator+(const ForwardList& left, const ForwardList& right)
 {
 	ForwardList result = left;	//Копируем левый список в результат
-	//for (Element* Temp = right.getHead(); Temp; Temp = Temp->get_pNext())//Проходим по правому списку
+	//for (Element* Temp = right.get_Head(); Temp; Temp = Temp->get_pNext())//Проходим по правому списку
 	//	result.push_back(Temp->getData());//и добавляем все его элементы в конец результата
-	for (Iterator Temp = right.getHead(); Temp; Temp++)
+	for (Iterator Temp = right.get_Head(); Temp; Temp++)
 	{
 		result.push_back(*Temp);
 	}
@@ -345,16 +361,7 @@ void main()
 		cout << i << tab;
 	}
 	cout << endl;
-	/*
-	----------------------------------------
-		for(iterator:range)
-		{
-			group-of-statements;
-		}
-		begin()	- возвращает итератор на начало контейнера
-		end()	- возвращает итератор на конец контейнера
-	----------------------------------------
-	*/
+	
 #endif // RANGE_BASED_FOR_ARR
 
 	ForwardList list = { 3, 5, 8, 13, 21 };
