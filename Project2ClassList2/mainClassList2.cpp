@@ -227,11 +227,13 @@ public:
 			Temp = Tail;
 			for (int i = 0; i < size - Index - 1; i++)Temp = Temp->pPrev;
 		}
-		Element* New = new Element(Data);
+		/*Element* New = new Element(Data);
 		New->pNext = Temp;
 		New->pPrev = Temp->pPrev;
 		Temp->pPrev->pNext = New;
 		Temp->pPrev = New;
+		size++;*/
+		Temp->pPrev = Temp->pPrev->pNext = new Element(Data, Temp, Temp->pPrev);
 		size++;
 	}
 	//	Removing element
@@ -256,6 +258,39 @@ public:
 		Tail = Tail->pPrev;
 		delete Tail->pNext;
 		Tail->pNext = nullptr;
+		size--;
+	}
+	void erase(int Index)
+	{
+		if (Index >= size)
+		{
+			cout << "Error: Выход за пределы списка!" << endl;
+			return;
+		}
+		if (Index == 0)
+		{
+			pop_front();
+			return;
+		}
+		if (Index == size - 1)
+		{
+			pop_back();
+			return;
+		}
+		Element* Temp;
+		if (Index < size / 2)
+		{
+			Temp = Head;
+			for (int i = 0; i < Index; i++)Temp = Temp->pNext;
+		}
+		else
+		{
+			Temp = Tail;
+			for (int i = 0; i < size - Index - 1; i++)Temp = Temp->pPrev;
+		}
+		Temp->pPrev->pNext = Temp->pNext;
+		Temp->pNext->pPrev = Temp->pPrev;
+		delete Temp;
 		size--;
 	}
 	//	Methods
