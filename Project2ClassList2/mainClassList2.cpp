@@ -1,11 +1,9 @@
 ﻿#include<iostream>
-using namespace std;
 using std::cin;
 using std::cout;
 using std::endl;
 
 #define tab "\t"
-#define line "\n______________________________________________________\n"
 
 class List
 {
@@ -15,8 +13,8 @@ class List
 		Element* pNext;
 		Element* pPrev;
 	public:
-		Element(int Data, Element* pNext = nullptr, Element* pPrev = nullptr)
-			:Data(Data), pNext(pNext), pPrev(pPrev)
+		Element(int Data, Element* pNext = nullptr, Element* pPrev = nullptr) :
+			Data(Data), pNext(pNext), pPrev(pPrev)
 		{
 			cout << "EConstructor:\t" << this << endl;
 		}
@@ -25,8 +23,8 @@ class List
 			cout << "EDestructor:\t" << this << endl;
 		}
 		friend class List;
-	}*Head, * Tail;	//Объявляем два указателя сразу же после описания класса
-	//Эти указатели будут переменными членами класса List
+	}*Head, * Tail;//Объявляем два указателя сразу же после описания класса
+	//Эти указатели будут переменными членами класса List.
 	size_t size;	//Размер списка
 public:
 	class Iterator
@@ -154,9 +152,10 @@ public:
 	{
 		return nullptr;
 	}
+
 	List()
 	{
-		Head = Tail = nullptr;	//Если список пуст, то голова и хвост указываю на 0
+		Head = Tail = nullptr;	//Если список пуст, его Голова и Хвост указывают на 0
 		size = 0;
 		cout << "LConstructor:\t" << this << endl;
 	}
@@ -178,9 +177,10 @@ public:
 	{
 		while (Head)pop_front();
 		cout << "LDestructor:\t" << this << endl;
-		cout << line << endl;
+		cout << "\n-------------------------------------\n";
 	}
-	//	Operators:
+
+	//				Operators:
 	List& operator=(const List& other)
 	{
 		if (this == &other)return *this;
@@ -189,13 +189,14 @@ public:
 		cout << "LCopyAssignment:\t" << this << endl;
 		return *this;
 	}
-	//	Adding elements:
+
+	//				Adding elements:
 	void push_front(int Data)
 	{
 		if (Head == nullptr && Tail == nullptr)
 		{
-			//Когда в списке появляется первый эдемент,\
-			он одновременно является и "головой" и "хвостом"
+			//Когда в списке появляется первый элемент, 
+			//он одновременно является и Головой и Хвостом.
 			Head = Tail = new Element(Data);
 			size++;
 			return;
@@ -216,6 +217,7 @@ public:
 			cout << "Error: Выход за пределы списка!" << endl;
 			return;
 		}
+
 		Element* Temp;
 		if (Index < size / 2)
 		{
@@ -227,16 +229,15 @@ public:
 			Temp = Tail;
 			for (int i = 0; i < size - Index - 1; i++)Temp = Temp->pPrev;
 		}
-		/*Element* New = new Element(Data);
+		Element* New = new Element(Data);
 		New->pNext = Temp;
 		New->pPrev = Temp->pPrev;
 		Temp->pPrev->pNext = New;
 		Temp->pPrev = New;
-		size++;*/
-		Temp->pPrev = Temp->pPrev->pNext = new Element(Data, Temp, Temp->pPrev);
 		size++;
 	}
-	//	Removing element
+
+	//						Removing elements:
 	void pop_front()
 	{
 		if (Head == nullptr && Tail == nullptr)return;
@@ -260,40 +261,8 @@ public:
 		Tail->pNext = nullptr;
 		size--;
 	}
-	void erase(int Index)
-	{
-		if (Index >= size)
-		{
-			cout << "Error: Выход за пределы списка!" << endl;
-			return;
-		}
-		if (Index == 0)
-		{
-			pop_front();
-			return;
-		}
-		if (Index == size - 1)
-		{
-			pop_back();
-			return;
-		}
-		Element* Temp;
-		if (Index < size / 2)
-		{
-			Temp = Head;
-			for (int i = 0; i < Index; i++)Temp = Temp->pNext;
-		}
-		else
-		{
-			Temp = Tail;
-			for (int i = 0; i < size - Index - 1; i++)Temp = Temp->pPrev;
-		}
-		Temp->pPrev->pNext = Temp->pNext;
-		Temp->pNext->pPrev = Temp->pPrev;
-		delete Temp;
-		size--;
-	}
-	//	Methods
+
+	//						Methods:
 	void print()const
 	{
 		cout << "Head:\t" << Head << endl;
@@ -305,9 +274,9 @@ public:
 	void reverse_print()const
 	{
 		cout << "Tail:\t" << Tail << endl;
-		for(Element* Temp = Tail; Temp; Temp=Temp->pPrev)
+		for (Element* Temp = Tail; Temp; Temp = Temp->pPrev)
 			cout << Temp->pPrev << tab << Temp << tab << Temp->Data << tab << Temp->pNext << endl;
-		cout << "Head:\t" << Head<< endl;
+		cout << "Head:\t" << Head << endl;
 	}
 };
 
@@ -316,7 +285,6 @@ public:
 void main()
 {
 	setlocale(LC_ALL, "");
-
 #ifdef BASE_CHECK
 	int n;
 	cout << "Введите размер списка: "; cin >> n;
