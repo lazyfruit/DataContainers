@@ -371,5 +371,5 @@ void main()
 	for (int i : list1)cout << i << tab; cout << endl;
 
 	reverse_print_list(list1);
-	print_list(list1);
+	print_list(list1);;
 }
